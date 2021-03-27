@@ -1,13 +1,12 @@
 import { cleanup } from '@testing-library/react';
 import {BrowserRouter, Link, Switch, Route} from 'react-router-dom'
+import {useState} from 'react'
 import 'bulma'
 
 import {HomePage} from './pages/Home';
 import {LivePricePage} from './pages/LivePrice';
 
 const foodTypes = ["grains", "vegetables", "fruit and nuts", "dairy and alternatives", "animal products and alternatives", "sweets", "seasoning and sices", "oils"]
-
-
 
 const fruitTypes = [
   'Apple', 
@@ -94,7 +93,8 @@ const grainTypes = [
   'Crackers',
   'English muffins',
   'French bread',
-  'Hamburger & hot dog buns',
+  'Hamburger',
+  'Hot dog buns',
   'Macaroni',
   'Noodles',
   'Pancakes',
@@ -107,17 +107,37 @@ const grainTypes = [
 const seasoningAndSpices = ['bouillon', 'salt', 'pepper', 'paprika', 'ground ginger', 'sesame', 'seedcream of tartarchili sauce', 'soya sauce', 'apple cider', 'hoisin sauce', 'liquid smoke', 
 'rice wine', 'vegetable bouillon', 'poppy seed', 'wasabi', 'fish stock', 'rose water', 'champagne vinegar', 'bbq rub', 'jamaican jerk spice', 'accent seasoning', 'pickling spice', 'mustard powder', 'mango powder', 'adobo seasoning', 'kasuri methi', 'caribbean jerk seasoning', 'brine', 'matcha powder', 'cassia']
 
-function generateCheckboxes(inputs) {
-  var newInputs = inputs.map(i => {
-    return (<div>
-              <input type="checkbox" id={i} name={i} value={i}/> 
-              <label for={i}> {i} </label>
-            </div>);
-  });
-  return <div> {newInputs} </div>
-}
 
 function App() {
+
+  const [json, setJson] = useState(null)
+
+  function generateCheckboxes(inputs) {
+    var newInputs = inputs.map(i => {
+      return (<div>
+                <input type="checkbox" id={i} name={i} value={i} /> 
+                <label for={i}> {i} </label>
+              </div>);
+    });
+    return <div> {newInputs} </div>
+  }
+
+  function generateJson() {
+    if (json != null) {
+      return <div> {JSON.stringify(json.hits[0].recipe)} </div>
+    } else {
+      return <div></div>
+    }
+  }
+
+  function handleQuery() {
+    var allKeywords = fruitTypes.concat(vegetableTypes, grainTypes, seasoningAndSpices).filter(keyword => {return document.getElementById(keyword).checked});
+    var YOUR_APP_ID = "9669badf"
+    var YOUR_APP_KEY = "2214555d9d02c7bf569cfa7a31f95581"
+    var query = "https://api.edamam.com/search?q=" + allKeywords.reduce((acc, cur) => acc + " " + cur, "").replaceAll(" ", "+") + `&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}`;
+    fetch(query).then(res => res.json()).then(res => setJson(res))
+  }
+  
   return (
   <div>
     <h1 class = "is-size-1"> 
@@ -126,24 +146,26 @@ function App() {
       Please select the desired meal type and ingredients from below 
     </h2>
     <br/>
-      <div class = "columns">
-        <div class = "column has-background-danger-light">
-          <h4 class = "is-size-4"> Fruits </h4>
-          {generateCheckboxes(fruitTypes)}
-        </div>
-        <div class = "column has-background-danger-light">
-          <h4 class = "is-size-4"> Vegetables </h4>
-          {generateCheckboxes(vegetableTypes)}
-        </div>
-        <div class = "column has-background-danger-light">
-          <h4 class = "is-size-4"> Grains </h4>
-          {generateCheckboxes(grainTypes)}
-        </div>
-        <div class = "column has-background-danger-light">
-          <h4 class = "is-size-4"> Seasonings and Spices </h4>
-          {generateCheckboxes(seasoningAndSpices)}
-        </div>
+    <div class = "columns">
+      <div class = "column has-background-danger-light">
+        <h4 class = "is-size-4"> Fruits </h4>
+        {generateCheckboxes(fruitTypes)}
+      </div>
+      <div class = "column has-background-danger-light">
+        <h4 class = "is-size-4"> Vegetables </h4>
+        {generateCheckboxes(vegetableTypes)}
+      </div>
+      <div class = "column has-background-danger-light">
+        <h4 class = "is-size-4"> Grains </h4>
+        {generateCheckboxes(grainTypes)}
+      </div>
+      <div class = "column has-background-danger-light">
+        <h4 class = "is-size-4"> Seasonings and Spices </h4>
+        {generateCheckboxes(seasoningAndSpices)}
+      </div>
     </div>
+    <button onClick = {handleQuery} > Submit </button>
+    {generateJson()}
   </div>
   )
 }
