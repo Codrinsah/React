@@ -4,6 +4,8 @@ import {RecipeList} from './components/RecipeList';
 import {Recipe} from './components/Recipe';
 import {FoodLogo} from './components/FoodLogo';
 import { ColumnHeader } from './components/ColumnHeader';
+
+
 const dairyTypes = ['Almond milk','Brie','Buttermilk','Butter','Cashew milk','Cheddar','Clotted Cream','Coconut milk','Condensed Milk','Cow Milk','Crème Fraîche','Double Cream','Emmental','Evaporated Milk','Feta','Goat Milk','Gouda','Ice Cream','Kefir','Mascarpone','Mozzarella','Oat Milk','Parmesan','Powdered Milk','Rice Milk','Single Cream','Sour Cream','Soy Milk','Whipped Cream','Yogurt','Coconut Milk Yogurt','Hemp Yogurt','Soy Milk Yogurt']
 
 const oilsTypes = ['Avocado Oil','Coconut Oil','Olive Oil','Palm Oil','Peanut Oil','Rice bran Oil','Sesame Oil','Sunflower Oil','Mustard Oil']
@@ -96,12 +98,17 @@ function App() {
   return (
   <div class = "main-content">
     <section class="section has-text-centered has-background-danger has-text-info-light is-small">
-      <h1 class = "is-size-1">
-        Welcome to *Ready Recipies*</h1>
+      <h1 class = "title is-size-1 has-text-white">
+        Welcome to Ready Recipes</h1>
         <FoodLogo/>
-      <h2 class = "is-size-2"> 
-        Look in your fridge and select what you have there! 
+      <div class = "intro has-text-centered">
+      <h2 class = "subtitle is-size-2 has-text-white has-text-centered"> 
+        Throwing away half-eaten packets of spinach when they go bad or not quite finishing your leftovers might not feel like a lot, but it can really add up.
       </h2>
+      <h2 class = "subtitle is-size-2 has-text-white has-text-centered"> 
+        Look in your fridge and select what you have there!
+      </h2>
+      </div>
     </section>
     <div class = "container">
       <div class = "box columns">

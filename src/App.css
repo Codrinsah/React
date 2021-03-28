@@ -28,6 +28,12 @@
   margin: 5px;
 }
 
+.intro {
+  word-wrap: break-word;
+  width: 60%;
+  margin: 0 auto;
+}
+
 .easy {
   background-color: #AFE9C2;
 }
