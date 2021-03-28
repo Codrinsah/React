@@ -14,27 +14,27 @@ export function Recipe(props) {
 
   return (
     <div class="column is-one-third">
-        <div class="card m-5">
-          <div class="card-image p-2">
-            <figure class="image is-256x256">
-              <img src={image}/>
-            </figure>
-          </div>
-          <div class={color}>
-            <div class="card-content">
-              <div class="media">
-                <div class="media-content">
-                  <p class="title is-4"><a href = {link}> {name} </a> </p>
-                </div>
+      <div class="card m-5">
+        <div class="card-image p-2">
+          <figure class="image is-256x256">
+            <img src={image}/>
+          </figure>
+        </div>
+        <div class={color}>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4"><a href = {link}> {name} </a> </p>
               </div>
+            </div>
 
-              <div class="content">
-                <p> Ingredients: {ingredients.length} </p>
-                {generateDivs(ingredients)} 
-              </div>
+            <div class="content">
+              <p> Ingredients: {ingredients.length} </p>
+              {generateDivs(ingredients)} 
             </div>
           </div>
         </div>
       </div>
+    </div>
   );
 }
