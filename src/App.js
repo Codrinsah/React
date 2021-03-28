@@ -2,11 +2,13 @@ import { cleanup } from '@testing-library/react';
 import {BrowserRouter, Link, Switch, Route} from 'react-router-dom'
 import {useState} from 'react'
 import 'bulma'
+import {RecipeList} from './components/RecipeList';
 
 import {HomePage} from './pages/Home';
 import {LivePricePage} from './pages/LivePrice';
+import {Recipe} from './components/Recipe';
 
-const foodTypes = ["grains", "vegetables", "fruit and nuts", "dairy and alternatives", "animal products and alternatives", "sweets", "seasoning and sices", "oils"]
+const foodTypes = ["grains", "vegetables", "fruit", "dairy and alternatives", "animal products and alternatives", "sweets", "seasoning and spices", "oils", "nuts and legumes"]
 
 const fruitTypes = [
   'Apple', 
@@ -56,7 +58,6 @@ const vegetableTypes = [
   'Chickpea',
   'Chinese broccoli',
   'Chinese cabbage',
-  'Citrus coleslaw',
   'Corn or sweet corn',
   'Cucumber',
   'Aubergine',
@@ -105,7 +106,7 @@ const grainTypes = [
 ]
 
 const seasoningAndSpices = ['bouillon', 'salt', 'pepper', 'paprika', 'ground ginger', 'sesame', 'seedcream of tartarchili sauce', 'soya sauce', 'apple cider', 'hoisin sauce', 'liquid smoke', 
-'rice wine', 'vegetable bouillon', 'poppy seed', 'wasabi', 'fish stock', 'rose water', 'champagne vinegar', 'bbq rub', 'jamaican jerk spice', 'accent seasoning', 'pickling spice', 'mustard powder', 'mango powder', 'adobo seasoning', 'kasuri methi', 'caribbean jerk seasoning', 'brine', 'matcha powder', 'cassia']
+'rice wine', 'vegetable bouillon', 'poppy seed', 'pintos', 'fish stock', 'rose water', 'champagne vinegar', 'bbq rub', 'jamaican jerk spice', 'accent seasoning', 'pickling spice', 'mustard powder', 'mango powder', 'adobo seasoning', 'kasuri methi', 'caribbean jerk seasoning', 'brine', 'matcha powder', 'cassia']
 
 
 function App() {
@@ -123,24 +124,36 @@ function App() {
   }
 
   function generateJson() {
-    if (json != null) {
-      return <div> {JSON.stringify(json.hits[0].recipe)} </div>
-    } else {
+    if (json == null) {
       return <div></div>
     }
+
+    const recipes = json.hits.map(hit => {
+      return <Recipe recipe = {hit.recipe}/>
+    });
+
+    return <RecipeList recipes = {recipes} />
   }
 
   function handleQuery() {
     var allKeywords = fruitTypes.concat(vegetableTypes, grainTypes, seasoningAndSpices).filter(keyword => {return document.getElementById(keyword).checked});
-    var YOUR_APP_ID = "9669badf"
-    var YOUR_APP_KEY = "2214555d9d02c7bf569cfa7a31f95581"
-    var query = "https://api.edamam.com/search?q=" + allKeywords.reduce((acc, cur) => acc + " " + cur, "").replaceAll(" ", "+") + `&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}`;
+    var YOUR_APP_ID = "b8f5078d"
+    var YOUR_APP_KEY = "8b94e495d9c68eb626acbe907659aacc"
+
+    const recipeNumberField = document.getElementById("recipeNumber");
+    var recipeNumber = 10;
+    console.log(recipeNumberField.value)
+    if (recipeNumberField.value != "") {
+      recipeNumber = recipeNumberField.value
+    }
+
+    var query = "https://api.edamam.com/search?q=" + allKeywords.reduce((acc, cur) => acc + " " + cur, "").replaceAll(" ", "+") + `&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}` + `&from=0&to=${recipeNumber}`;
     fetch(query).then(res => res.json()).then(res => setJson(res))
   }
   
   return (
   <div>
-    <h1 class = "is-size-1"> 
+    <h1 class = "is-size-1">
       Welcome to *Ready Recipies*</h1>
     <h2 class = "is-size-2"> 
       Please select the desired meal type and ingredients from below 
@@ -164,6 +177,8 @@ function App() {
         {generateCheckboxes(seasoningAndSpices)}
       </div>
     </div>
+    <label for="recipeNumber"> Number of results: </label>
+    <input type="number" id="recipeNumber" name="recipeNumber"/>
     <button onClick = {handleQuery} > Submit </button>
     {generateJson()}
   </div>
