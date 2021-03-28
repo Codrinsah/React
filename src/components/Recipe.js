@@ -17,7 +17,7 @@ export function Recipe(props) {
       <div class="card m-5">
         <div class="card-image p-2">
           <figure class="image is-256x256">
-            <img src={image}/>
+            <img src={image} alt = {""}/>
           </figure>
         </div>
         <div class={color}>
