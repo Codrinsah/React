@@ -7,7 +7,7 @@ export function Recipe(props) {
   function generateDivs(inputs) {
     var newInputs = inputs.map(i => {
       console.log(i)
-      return (<span class="tag is-warning is-light">{i.text}</span>);
+      return (<span class="tag is-info is-normal">{i.text}</span>);
     });
     return <div> {newInputs} </div>
   }

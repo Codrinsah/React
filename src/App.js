@@ -4,9 +4,13 @@ import {RecipeList} from './components/RecipeList';
 import {Recipe} from './components/Recipe';
 
 const dairyTypes = ['Almond milk','Brie','Buttermilk','Butter','Cashew milk','Cheddar','Clotted Cream','Coconut milk','Condensed Milk','Cow Milk','Crème Fraîche','Double Cream','Emmental','Evaporated Milk','Feta','Goat Milk','Gouda','Ice Cream','Kefir','Mascarpone','Mozzarella','Oat Milk','Parmesan','Powdered Milk','Rice Milk','Single Cream','Sour Cream','Soy Milk','Whipped Cream','Yogurt','Coconut Milk Yogurt','Hemp Yogurt','Soy Milk Yogurt']
+
 const oilsTypes = ['Avocado Oil','Coconut Oil','Olive Oil','Palm Oil','Peanut Oil','Rice bran Oil','Sesame Oil','Sunflower Oil','Mustard Oil']
+
 const nutsTypes = ['Almonds','Black Beans','Cashews','Chickpeas','Hazelnuts','Kidney Beans','Lentils','Macadamia Nuts','Peanuts','Peas','Pecans','Pine Nuts','Pinto Beans','Pistachios','Soybeans','Walnuts']
+
 const sweetsTypes = ['Chocolate Chips','Dark Chocolate','Gummies','Jam','Jelly Beans','Marshmallows','Milk Chocolate','Nutella','Sprinkles', 'Sugar', 'White Chocolate']
+
 const meatTypes = ['Beef','Chicken','Duck','Eggs','Fish','Goat','Lamb','Plant Based Chicken','Plant Based Sausages','Pork','Rabbit','Sausages','Seafood','Seitan','Tempeh','Tofu','Turkey','Veggie Burgers']
 
 const fruitTypes = ['Apple', 'Apricot', 'Banana', 'Blueberry', 'Cherry', 'Fig', 'Grape', 'Grapefruit', 'Guava', 'Honeydew', 'Kiwi', 'Lemon', 'Lime', 'Lychee', 'Mandarin', 'Mango', 'Melon', 'Nectarine', 'Orange', 'Papaya', 'Passionfruit', 'Peach', 'Pear', 'Pineapple', 'Plum', 'Pomegranate', 'Pomelo', 'Raspberry', 'Strawberry', 'Watermelon']
@@ -69,72 +73,89 @@ function App() {
       return <div></div>
     }
     var showIngredients = inputs.map(i => {
-      return (<span class="tag is-success is-medium">
+      return (<span class="tag is-success is-medium m-2">
                 {i}
+                <button class="delete is-small" onClick={() => removeFromIngredients(i)}></button>
               </span>);
     });
     return <div> {showIngredients} </div>
   }
+
+  function removeFromIngredients(input) {
+    const checkBox = document.getElementById(input)
+    checkBox.checked = false;
+    handleQuery();
+  }
+
+  function restartQuery() {
+    setIngredients(null)
+    setJson(null)
+  }
   
   return (
-  <div>
-    <section class="section has-text-centered has-background-danger has-text-info-light">
+  <div class = "main-content">
+    <section class="section has-text-centered has-background-danger has-text-info-light is-large">
       <h1 class = "is-size-1">
         Welcome to *Ready Recipies*</h1>
       <h2 class = "is-size-2"> 
         Please select the desired meal type and ingredients from below 
       </h2>
     </section>
-    <div class = "columns">
-      <div class = "column has-background-danger-light">
-        <h4 class = "is-size-4"> Fruits </h4>
-        {generateCheckboxes(fruitTypes)}
-      </div>
-      <div class = "column has-background-danger-light">
-        <h4 class = "is-size-4"> Vegetables </h4>
-        {generateCheckboxes(vegetableTypes)}
-      </div>
-      <div class = "column has-background-danger-light">
-        <h4 class = "is-size-4"> Grains </h4>
-        {generateCheckboxes(grainTypes)}
-      </div>
-      <div class = "column has-background-danger-light">
-        <h4 class = "is-size-4"> Seasonings and Spices </h4>
-        {generateCheckboxes(seasoningAndSpices)}
-      </div>
-
-      <div class = "column has-background-danger-light">
-        <h4 class = "is-size-4"> Dairy Types </h4>
-        {generateCheckboxes(dairyTypes)}
-      </div>
-      <div class = "column has-background-danger-light">
-        <h4 class = "is-size-4"> Oils Types </h4>
-        {generateCheckboxes(oilsTypes)}
-      </div>
-      <div class = "column has-background-danger-light">
-        <h4 class = "is-size-4"> Nuts Types </h4>
-        {generateCheckboxes(nutsTypes)}
-      </div>
-      <div class = "column has-background-danger-light">
-        <h4 class = "is-size-4"> Sweet Types </h4>
-        {generateCheckboxes(sweetsTypes)}
-      </div>
-      <div class = "column has-background-danger-light">
-        <h4 class = "is-size-4"> Meat Types </h4>
-        {generateCheckboxes(meatTypes)}
-      </div>
-    </div>
-    <div class="container" width="30%" align="center">
-      <div class="field has-text-centered" width='30%'>
-        <label class="label">How many recipes do you need?</label>
-        <div class="control">
-          <input class="input" type="number" id="recipeNumber" name="recipeNumber" placeholder="Number of results"/>
+    <div class = "container">
+      <div class = "box columns">
+        <div class = "column has-background-danger-light">
+          <h4 class = "is-size-4"> Fruits </h4>
+          {generateCheckboxes(fruitTypes)}
         </div>
-        <button onClick = {handleQuery} > Submit </button>
+        <div class = "column has-background-danger-light">
+          <h4 class = "is-size-4"> Vegetables </h4>
+          {generateCheckboxes(vegetableTypes)}
+        </div>
+        <div class = "column has-background-danger-light">
+          <h4 class = "is-size-4"> Grains </h4>
+          {generateCheckboxes(grainTypes)}
+        </div>
+        <div class = "column has-background-danger-light">
+          <h4 class = "is-size-4"> Seasonings and Spices </h4>
+          {generateCheckboxes(seasoningAndSpices)}
+        </div>
+
+        <div class = "column has-background-danger-light">
+          <h4 class = "is-size-4"> Dairy Products and Alternatives </h4>
+          {generateCheckboxes(dairyTypes)}
+        </div>
+        <div class = "column has-background-danger-light">
+          <h4 class = "is-size-4"> Oil Types </h4>
+          {generateCheckboxes(oilsTypes)}
+        </div>
+        <div class = "column has-background-danger-light">
+          <h4 class = "is-size-4"> Nuts and Legumes </h4>
+          {generateCheckboxes(nutsTypes)}
+        </div>
+        <div class = "column has-background-danger-light">
+          <h4 class = "is-size-4"> Sweets </h4>
+          {generateCheckboxes(sweetsTypes)}
+        </div>
+        <div class = "column has-background-danger-light">
+          <h4 class = "is-size-4"> Animal Products and Alternatives </h4>
+          {generateCheckboxes(meatTypes)}
+        </div>
       </div>
-      {displaySelected(ingredients)}
+      <div class="container">
+        <div class="field has-text-centered" width='30%'>
+          <label class="label">How many recipes do you need?</label>
+          <div class="control">
+            <input class="input" type="number" id="recipeNumber" name="recipeNumber" placeholder="Number of results"/>
+          </div>
+          <div class = 'buttons are-medium m-4'> 
+            <button onClick = {handleQuery} class = 'button is-success'> Submit </button>
+            <button onClick = {restartQuery} class = 'button is-danger'>Reset search results</button> 
+          </div> 
+        </div>
+        {displaySelected(ingredients)}
+      </div>
+      {generateJson()}
     </div>
-    {generateJson()}
   </div>
   )
 }
