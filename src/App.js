@@ -2,7 +2,8 @@ import {useState} from 'react'
 import 'bulma'
 import {RecipeList} from './components/RecipeList';
 import {Recipe} from './components/Recipe';
-
+import {FoodLogo} from './components/FoodLogo';
+import { ColumnHeader } from './components/ColumnHeader';
 const dairyTypes = ['Almond milk','Brie','Buttermilk','Butter','Cashew milk','Cheddar','Clotted Cream','Coconut milk','Condensed Milk','Cow Milk','Crème Fraîche','Double Cream','Emmental','Evaporated Milk','Feta','Goat Milk','Gouda','Ice Cream','Kefir','Mascarpone','Mozzarella','Oat Milk','Parmesan','Powdered Milk','Rice Milk','Single Cream','Sour Cream','Soy Milk','Whipped Cream','Yogurt','Coconut Milk Yogurt','Hemp Yogurt','Soy Milk Yogurt']
 
 const oilsTypes = ['Avocado Oil','Coconut Oil','Olive Oil','Palm Oil','Peanut Oil','Rice bran Oil','Sesame Oil','Sunflower Oil','Mustard Oil']
@@ -19,7 +20,7 @@ const vegetableTypes = ['Asparagus', 'Aubergine', 'Avocado', 'Bean', 'Beetroot',
 
 const grainTypes = ['Bagel', 'Bread', 'Brown Rice', 'Cereals', 'Corn Tortillas', 'Cornmeal', 'Crackers', 'Flour', 'Hamburger Buns', 'Hot Dog Buns','Macaroni','Noodles','Oatmeal', 'Pasta','Popcorn','Pretzels','Spaghetti']
 
-const seasoningAndSpices = ['Apple Cider Vinegar','Bbq Rub','Bouillon','Brine','Caribbean Jerk Seasoning','Cassia','Champagne Vinegar','Fish Stock','Ground Ginger','Hoisin Sauce','Hot Sauce','Jamaican Jerk Spice','Kasuri Methi','Liquid Smoke','Mango Powder','Matcha Powder','Mustard Powder','Paprika','Pepper','Pickling Ppice','Poppy Seeds','Rice Wine','Rose Water','Salt','Seedcream of Tartarchili Sauce','Sesame','Soy Sauce','Vanilla','Vegetable Bouillon']
+const seasoningAndSpices = ['Apple Cider Vinegar','Bbq Rub','Bouillon','Brine','Caribbean Jerk Seasoning','Cassia','Champagne Vinegar','Fish Stock','Ground Ginger','Hoisin Sauce','Hot Sauce','Jamaican Jerk Spice','Kasuri Methi','Liquid Smoke','Mango Powder','Matcha Powder','Mustard Powder','Paprika','Pepper','Pickling Ppice','Poppy Seeds','Rice Wine','Rose Water','Salt','Sesame','Soy Sauce','Vanilla','Vegetable Bouillon']
 
 
 function App() {
@@ -94,56 +95,57 @@ function App() {
   
   return (
   <div class = "main-content">
-    <section class="section has-text-centered has-background-danger has-text-info-light is-large">
+    <section class="section has-text-centered has-background-danger has-text-info-light is-small">
       <h1 class = "is-size-1">
         Welcome to *Ready Recipies*</h1>
+        <FoodLogo/>
       <h2 class = "is-size-2"> 
-        Please select the desired meal type and ingredients from below 
+        Look in your fridge and select what you have there! 
       </h2>
     </section>
     <div class = "container">
       <div class = "box columns">
         <div class = "column has-background-danger-light">
-          <h4 class = "is-size-4"> Fruits </h4>
+          <ColumnHeader value = "Fruits" />
           {generateCheckboxes(fruitTypes)}
         </div>
         <div class = "column has-background-danger-light">
-          <h4 class = "is-size-4"> Vegetables </h4>
+          <ColumnHeader value = "Vegetables" />
           {generateCheckboxes(vegetableTypes)}
         </div>
         <div class = "column has-background-danger-light">
-          <h4 class = "is-size-4"> Grains </h4>
+          <ColumnHeader value = "Grains" />
           {generateCheckboxes(grainTypes)}
         </div>
         <div class = "column has-background-danger-light">
-          <h4 class = "is-size-4"> Seasonings and Spices </h4>
+          <ColumnHeader value = "Seasoning and Spices" />
           {generateCheckboxes(seasoningAndSpices)}
         </div>
 
         <div class = "column has-background-danger-light">
-          <h4 class = "is-size-4"> Dairy Products and Alternatives </h4>
+          <ColumnHeader value = "Dairy" />
           {generateCheckboxes(dairyTypes)}
         </div>
         <div class = "column has-background-danger-light">
-          <h4 class = "is-size-4"> Oil Types </h4>
+        <ColumnHeader value = "Oil Types" />
           {generateCheckboxes(oilsTypes)}
         </div>
         <div class = "column has-background-danger-light">
-          <h4 class = "is-size-4"> Nuts and Legumes </h4>
+        <ColumnHeader value = "Nuts and Legumes" />
           {generateCheckboxes(nutsTypes)}
         </div>
         <div class = "column has-background-danger-light">
-          <h4 class = "is-size-4"> Sweets </h4>
+        <ColumnHeader value = "Sweets" />
           {generateCheckboxes(sweetsTypes)}
         </div>
         <div class = "column has-background-danger-light">
-          <h4 class = "is-size-4"> Animal Products and Alternatives </h4>
+          <ColumnHeader value = "Animal Products / Alternatives" />
           {generateCheckboxes(meatTypes)}
         </div>
       </div>
       <div class="container">
         <div class="field has-text-centered" width='30%'>
-          <label class="label">How many recipes do you need?</label>
+          <label class="title label">How many recipes do you need?</label>
           <div class="control">
             <input class="input" type="number" id="recipeNumber" name="recipeNumber" placeholder="Number of results"/>
           </div>

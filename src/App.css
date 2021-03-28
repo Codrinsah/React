@@ -24,6 +24,27 @@
   color: white;
 }
 
+.is-food-tag {
+  margin: 5px;
+}
+
+.easy {
+  background-color: #AFE9C2;
+}
+
+.medium {
+  background-color: #FFEB99;
+}
+
+.hard {
+  background-color: #FFB3C3;
+}
+
+.tag__custom {
+  height: auto !important;
+  white-space: unset !important;
+}
+
 .App-link {
   color: #61dafb;
 }
